@@ -18,6 +18,7 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
     ActionBarDrawerToggle mDrawerToggle;
     String[] fragments;
     ListView nav_listView;
+    DrawerLayout drawerLayout;
 
     // Fragments
     MapViewFragment mapViewFragment;
@@ -34,7 +35,7 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
 
         // Drawer craziness
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(mDrawerToggle);
 
