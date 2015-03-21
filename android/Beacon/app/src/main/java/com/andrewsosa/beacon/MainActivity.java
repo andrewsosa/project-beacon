@@ -8,15 +8,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.melnykov.fab.FloatingActionButton;
 
 
 public class MainActivity extends Activity implements Toolbar.OnMenuItemClickListener{
@@ -55,6 +62,15 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
         dataSource = new BeaconDataSource(this);
         dataSource.open();
 
+        // FAB listener
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createBeaconDialog();
+            }
+        });
+
         // Add initial fragment
         if (findViewById(R.id.content_frame) != null) {
 
@@ -75,6 +91,8 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
             }
         }
 
+
+        // This is drawer touch stuff
         RelativeLayout map_group = (RelativeLayout) findViewById(R.id.map_group);
         map_group.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +177,50 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
     public Cursor getDataCursor() {
         return null;
+    }
+
+    private EditText nameInput;
+    private View positiveAction;
+    private void createBeaconDialog() {
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .customView(R.layout.create_dialog_view, false)
+                .title("List Name")
+                .positiveText("Create")
+                .negativeText(android.R.string.cancel)
+                .positiveColor(getResources().getColor(R.color.primaryColor))
+                .negativeColor(getResources().getColor(R.color.primaryColor))
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        if (nameInput != null) {
+                            dataSource.add_beacon(0,0,nameInput.getText().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                    }
+                }).build();
+
+        positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        nameInput = (EditText) dialog.getCustomView().findViewById(R.id.list_name_input);
+        nameInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                positiveAction.setEnabled(s.toString().trim().length() > 0);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        dialog.show();
+        positiveAction.setEnabled(false); // disabled by default
     }
 
 

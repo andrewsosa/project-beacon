@@ -36,16 +36,17 @@ public class BeaconDataSource {
         dbHelper.close();
     }
 
-    public Beacon add_beacon(long Long, long lat, String name) {
+    public Beacon add_beacon(long latitude, long longitude, String name) {
 
         // Pack tuple values
         ContentValues values = new ContentValues();
+        values.put(BeaconHelperData.COLUMN_LATITUDE, latitude);
+        values.put(BeaconHelperData.COLUMN_LONGITUDE, longitude);
         values.put(BeaconHelperData.COLUMN_NAME, name);
-        values.put(BeaconHelperData.COLUMN_LONGITUDE, Long);
-        values.put(BeaconHelperData.COLUMN_LATITUDE, lat);
+
 
         // Do insert, get _id
-        Long insertId = database.insert(BeaconHelperData.TABLE_BEACONS, null, values);
+        long insertId = database.insert(BeaconHelperData.TABLE_BEACONS, null, values);
 
         // Reread the tuple
         Cursor cursor = database.query(BeaconHelperData.TABLE_BEACONS,
