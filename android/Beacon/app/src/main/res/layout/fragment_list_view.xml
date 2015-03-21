@@ -1,9 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.andrewsosa.beacon.ListViewFragment">
+    android:layout_height="match_parent" tools:context="com.andrewsosa.beacon.ListViewFragment"
+    android:orientation="vertical"
+    android:backgroundTint="@color/windowBackground">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@color/primaryColor"/>
 
-</FrameLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list" />
+
+
+</LinearLayout>
