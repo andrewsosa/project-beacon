@@ -3,11 +3,11 @@
 
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- Customize your theme here. -->
-        <item name="android:colorPrimary">@color/pink_500</item>
-        <item name="android:colorPrimaryDark">@color/pink_700</item>
+        <item name="android:colorPrimary">@color/primaryColor</item>
+        <item name="android:colorPrimaryDark">@color/primaryColorDark</item>
         <item name="android:colorAccent">@color/accentColor</item>
 
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>

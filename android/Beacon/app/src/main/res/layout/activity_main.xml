@@ -7,18 +7,55 @@
     android:fitsSystemWindows="false">
 
     <!-- The main content view -->
+
     <RelativeLayout
-        android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="false">
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:layout_alignParentStart="false"
+            android:elevation="1dp">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="fill_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@color/windowBackground"
+                android:layout_margin="8dp"
+                android:elevation="4dp">
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@android:color/transparent"
+                    android:hint="Search Beacons..."/>
+
+            </android.support.v7.widget.Toolbar>
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="false">
 
 
-        <include
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            layout="@layout/fragment_map" />
+            <!--<include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                layout="@layout/fragment_map" />-->
+        </FrameLayout>
+
     </RelativeLayout>
+
 
 
     <!-- The navigation drawer -->
