@@ -8,7 +8,7 @@ import android.util.Log;
 /**
  * Created by Jeffrey Kuang on 3/21/2015.
  */
-public class BeaconDataHelper extends SQLiteOpenHelper {
+public class BeaconHelperData extends SQLiteOpenHelper {
 
     public static final String TABLE_BEACONS = "beacons";
 
@@ -33,7 +33,7 @@ public class BeaconDataHelper extends SQLiteOpenHelper {
             + COLUMN_RATING     + " integer not null"
             + ");";
 
-    public BeaconDataHelper(Context context) {
+    public BeaconHelperData(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -44,7 +44,7 @@ public class BeaconDataHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(BeaconDataHelper.class.getName(),
+        Log.w(BeaconHelperData.class.getName(),
                 "Upgrading beacons database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BEACONS);
