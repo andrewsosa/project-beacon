@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+
+        <!-- Customize your theme here. -->
+        <item name="android:colorPrimary">@color/pink_500</item>
+        <item name="android:colorPrimaryDark">@color/pink_700</item>
+        <item name="android:colorAccent">@color/accentColor</item>
+
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">#80000000</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
+
+    </style>
+
+
+
+</resources>

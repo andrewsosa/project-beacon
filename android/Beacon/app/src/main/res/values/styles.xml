@@ -5,10 +5,7 @@
 
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">#805677fc</item>
-
-        <item name="windowDrawsSystemBarBackgrounds">true</item>
-        <item name="windowTranslucentStatus">true</item>
+        <item name="colorPrimaryDark">@color/primaryColorDark</item>
 
 
     </style>
