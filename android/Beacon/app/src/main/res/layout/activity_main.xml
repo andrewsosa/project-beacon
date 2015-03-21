@@ -26,10 +26,12 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="fill_parent"
-                android:layout_height="?android:attr/actionBarSize"
+                android:layout_height="48dp"
                 android:background="@color/windowBackground"
                 android:layout_margin="8dp"
-                android:elevation="4dp">
+                android:gravity="center_vertical"
+                android:elevation="4dp"
+                android:minHeight="48dp">
 
                 <EditText
                     android:layout_width="fill_parent"
@@ -52,7 +54,7 @@
             <!--<include
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                layout="@layout/fragment_map" />-->
+                layout="@layout/fragment_map_view" />-->
         </FrameLayout>
 
     </RelativeLayout>

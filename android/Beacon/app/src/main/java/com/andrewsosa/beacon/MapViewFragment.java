@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -19,9 +18,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapViewFragment extends Fragment implements OnMapReadyCallback {
+public class MapViewFragment extends BeaconFragment implements OnMapReadyCallback {
 
-    MapFragment mapFragment;
+    private MapFragment mapFragment;
+    public static String TAG = "MAP_VIEW_FRAGMENT";
+
 
     public MapViewFragment() {
         // Required empty public constructor
@@ -31,7 +32,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        return inflater.inflate(R.layout.fragment_map_view, container, false);
     }
 
     @Override

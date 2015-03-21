@@ -3,6 +3,7 @@ package com.andrewsosa.beacon;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.database.Cursor;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,7 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
@@ -26,6 +29,9 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
     // Fragments
     MapViewFragment mapViewFragment;
+
+    // Current position
+    int activePosition = 0;
 
 
     @Override
@@ -62,7 +68,21 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
             }
         }
 
+        RelativeLayout map_group = (RelativeLayout) findViewById(R.id.map_group);
+        map_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectItem(0);
+            }
+        });
 
+        RelativeLayout list_group = (RelativeLayout) findViewById(R.id.list_group);
+        list_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectItem(1);
+            }
+        });
 
 
 
@@ -99,8 +119,16 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
     /** Swaps fragments in the main content view */
     private void selectItem(int position) {
+
+        if(position == activePosition) {
+            drawerLayout.closeDrawers();
+            return;
+        }
+
+        activePosition = position;
+
         // Create a new fragment and specify the planet to show based on position
-        Fragment fragment = null;
+        BeaconFragment fragment = null;
 
         if (position == 0) {
             fragment = new MapViewFragment();
@@ -108,18 +136,22 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
             fragment = new ListViewFragment();
         }
 
-        Toast.makeText(MainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-
         // Insert the fragment by replacing any existing fragment
         if (fragment != null) {
+            fragment.setActivity(this);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, fragment)
                     .commit();
         }
         // Highlight the selected item, update the title, and close the drawer
-        mDrawerList.setItemChecked(position, true);
-        drawerLayout.closeDrawer(mDrawerList);
+        //mDrawerList.setItemChecked(position, true);
+        //drawerLayout.closeDrawer(drawerLayout);
+        drawerLayout.closeDrawers();
+    }
+
+    public Cursor getDataCursor() {
+        return null;
     }
 
 
