@@ -116,5 +116,14 @@ public class BeaconDataSource {
     private Beacon cursor_to_beacon(Cursor c) {
         return new Beacon(c.getLong(0), c.getLong(1), c.getLong(2), c.getString(3));
     }
+
+    //TODO general search all fields for beacon
+    public Beacon search_beacon(String statement ){
+        Cursor cursor = database.query(BeaconOpenHelper.TABLE_BEACONS,
+                allColumns, BeaconOpenHelper.COLUMN_NAME + " = " + statement, null,
+                null, null, null);
+        Beacon result = cursor_to_beacon(cursor);
+        return result;
+    }
 }
 
