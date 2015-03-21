@@ -12,18 +12,39 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="fill_parent"
-            android:layout_height="?android:attr/actionBarSize"/>
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/windowBackground"
+            android:layout_margin="8dp"
+            android:elevation="4dp">
 
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@android:color/transparent"
+                android:hint="Search here..."/>
+
+        </android.support.v7.widget.Toolbar>
 
     </RelativeLayout>
+
+
     <!-- The navigation drawer -->
     <LinearLayout android:id="@+id/left_drawer"
-        android:layout_width="240dp"
+        android:layout_width="@dimen/drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:background="#111"
-        android:orientation="horizontal" />
+        android:orientation="horizontal">
+
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/drawer" />
+    </LinearLayout>
+
+
 </android.support.v4.widget.DrawerLayout>
