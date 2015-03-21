@@ -30,6 +30,9 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
     // Fragments
     MapViewFragment mapViewFragment;
 
+    // Data source
+    BeaconDataSource dataSource;
+
     // Current position
     int activePosition = 0;
 
@@ -47,6 +50,10 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(mDrawerToggle);
+
+        // Open the datasource
+        dataSource = new BeaconDataSource(this);
+        dataSource.open();
 
         // Add initial fragment
         if (findViewById(R.id.content_frame) != null) {

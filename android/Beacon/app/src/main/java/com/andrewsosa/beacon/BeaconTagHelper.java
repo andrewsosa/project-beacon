@@ -17,12 +17,12 @@ public class BeaconTagHelper extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "beacon_data.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database creation sql statement
     private static final String BEACON_TAG_TABLE_CREATE = "create table "
             + TABLE_BEACON_TAG  + "("
-            + COLUMN_ID         + " integer primary key autoincrement"
+            + COLUMN_ID         + " integer primary key autoincrement, "
             + COLUMN_TAG        + " text not null"
             + ");";
 

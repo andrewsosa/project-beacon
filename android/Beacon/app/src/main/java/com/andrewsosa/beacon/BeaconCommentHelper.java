@@ -16,12 +16,12 @@ public class BeaconCommentHelper extends SQLiteOpenHelper {
     public static final String COLUMN_COMMENT = "comment";
 
     private static final String DATABASE_NAME = "beacon_comment.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Database creation sql statement
     private static final String BEACON_COMMENT_TABLE_CREATE = "create table "
             + TABLE_BEACON_COMMENT  + "("
-            + COLUMN_ID             + " integer primary key autoincrement"
+            + COLUMN_ID             + " integer primary key autoincrement, "
             + COLUMN_COMMENT        + " text not null"
             + ");";
 

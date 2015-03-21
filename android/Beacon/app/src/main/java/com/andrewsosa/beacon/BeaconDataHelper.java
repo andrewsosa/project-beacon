@@ -20,16 +20,16 @@ public class BeaconDataHelper extends SQLiteOpenHelper {
     public static final String COLUMN_RATING = "rating";
 
     private static final String DATABASE_NAME = "beacons.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Database creation sql statement
     private static final String BEACONS_TABLE_CREATE = "create table "
             + TABLE_BEACONS     + "("
-            + COLUMN_ID         + " integer primary key autoincrement"
-            + COLUMN_NAME       + " text not null"
-            + COLUMN_LONGITUDE  + " real not null"
-            + COLUMN_LATITUDE   + " real not null"
-            + COLUMN_TYPE       + " text not null"
+            + COLUMN_ID         + " integer primary key autoincrement, "
+            + COLUMN_NAME       + " text not null, "
+            + COLUMN_LONGITUDE  + " real not null, "
+            + COLUMN_LATITUDE   + " real not null, "
+            + COLUMN_TYPE       + " text not null, "
             + COLUMN_RATING     + " integer not null"
             + ");";
 
