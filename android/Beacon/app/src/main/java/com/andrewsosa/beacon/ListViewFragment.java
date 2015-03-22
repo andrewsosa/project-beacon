@@ -21,10 +21,18 @@ public class ListViewFragment extends BeaconFragment {
     SimpleCursorAdapter mAdapter;
 
     // These are the Beacon rows that we will retrieve
-    static final String[] PROJECTION = new String[] {BeaconHelperData.COLUMN_NAME};
+    static final String[] fromColumns = new String[] {
+            BeaconHelperData.COLUMN_NAME,
+            BeaconHelperData.COLUMN_TYPE,
+            BeaconHelperData.COLUMN_RATING
+    };
 
     // This is the select criteria
-    static final String SELECTION = null;
+    static final int[] toViews = new int[] {
+            R.id.tile_name,
+            R.id.tile_type,
+            R.id.tile_rating
+    };
 
 
     public ListViewFragment() {
@@ -50,10 +58,7 @@ public class ListViewFragment extends BeaconFragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
         progressBar.setIndeterminate(true);
         getListView().setEmptyView(progressBar); */
-
         // For the cursor adapter, specify which columns go into which views
-        String[] fromColumns = {BeaconHelperData.COLUMN_NAME};
-        int[] toViews = {R.id.tile_name}; // The TextView in simple_list_item_1
 
         // Create an empty adapter we will use to display the loaded data.
         // We pass null for the cursor, then update it in onLoadFinished()
