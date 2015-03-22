@@ -10,8 +10,18 @@
   padding: 0 15px;
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-    width: auto\9; /* ie8 */
+#our-banner {
+	background-image: url(../assets/beacon_promo_wide.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	height:50%;
 }
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+	background: rgba(0, 0, 0, 0)
+}
+
+  
