@@ -3,16 +3,24 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="16dp"
-    android:paddingTop="54dp"
     android:paddingRight="16dp"
-    android:paddingBottom="16dp"
-    android:padding="16dp">
+    android:paddingBottom="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/beacon_create_dialog"
+        android:id="@+id/textView"
+        android:textSize="18sp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/list_name_input"
         android:inputType="text"
-        android:hint="Enter a name" />
+        android:hint="Enter beacon name... "
+        android:layout_marginTop="8dp" />
 
 </LinearLayout>

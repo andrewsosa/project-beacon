@@ -9,6 +9,8 @@ public class Beacon {
     private long longitude;
     private long latitude;
     private String name;
+    private String type;
+    private int rating;
 
     public Beacon(long _id, long longitude, long latitude, String name) {
         this._id = _id;
@@ -31,5 +33,21 @@ public class Beacon {
 
     public String getName() {
         return name;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
