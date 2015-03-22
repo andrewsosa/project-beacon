@@ -3,6 +3,7 @@ package com.andrewsosa.beacon;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -81,7 +82,7 @@ public class BeaconDataSource {
     public void delete_beacon(Beacon beacon) {
         long id = beacon.get_id();
         database.delete(BeaconHelperData.TABLE_BEACONS, BeaconHelperData.COLUMN_ID
-            + " = " + id, null);
+                + " = " + id, null);
     }
 
     public Beacon get_beacon(long id) {
@@ -124,17 +125,26 @@ public class BeaconDataSource {
         return new Beacon(c.getLong(0), c.getLong(1), c.getLong(2), c.getString(3));
     }
 
-    // general search all fields for beacon
+    // general search all fields for beacon_data
     public Cursor search_data(String query) {
-        return database.query(true, BeaconHelperData.TABLE_BEACONS, new String[] { BeaconHelperData.COLUMN_ID,
-                BeaconHelperData.COLUMN_NAME, BeaconHelperData.COLUMN_LATITUDE,
-                BeaconHelperData.COLUMN_LONGITUDE, BeaconHelperData.COLUMN_TYPE,
-                BeaconHelperData.COLUMN_RATING }, BeaconHelperData.COLUMN_NAME + " LIKE" + "'%" +
-                query + "%' OR " + BeaconHelperData.COLUMN_LATITUDE +
-                " LIKE" + "'%" + query + "%' OR " + BeaconHelperData.COLUMN_LONGITUDE + " LIKE" + "'%" +
+        return database.query(true, BeaconHelperData.TABLE_BEACONS, new String[] {BeaconHelperData.COLUMN_NAME,
+                BeaconHelperData.COLUMN_TYPE}, BeaconHelperData.COLUMN_NAME + " LIKE" + "'%" +
                 query + "%' OR " + BeaconHelperData.COLUMN_TYPE  + " LIKE" + "'%" +
-                query + "%' OR " + BeaconHelperData.COLUMN_RATING  + " LIKE" + "'%" +
                 query + "%'", null, null, null, null, null);
+    }
+
+    // general search all fields for beacon_tag
+    public Cursor search_tag(String query) {
+        return database.query(true, BeaconHelperTag.TABLE_BEACON_TAG, new String[] { BeaconHelperTag.COLUMN_TAG},
+                BeaconHelperTag.COLUMN_TAG  + " LIKE" + "'%" + query + "%'", null, null, null, null, null);
+    }
+
+    // Merge the two general searchs into one
+    public Cursor search_merged(String query) {
+        Cursor data_cursor = search_data(query);
+        Cursor tag_cursor = search_tag(query);
+        Cursor [] final_cursor = {data_cursor, tag_cursor};
+        return new MergeCursor(final_cursor);
     }
 }
 
