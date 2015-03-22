@@ -189,7 +189,9 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         if (nameInput != null) {
-                            dataSource.add_beacon(0,0,nameInput.getText().toString());
+                            dataSource.add_beacon(mLastLocation.getLatitude(),
+                                    mLastLocation.getLongitude(),
+                                    nameInput.getText().toString());
                         }
                     }
 
