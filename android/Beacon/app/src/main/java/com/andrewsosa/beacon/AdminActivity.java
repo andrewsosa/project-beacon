@@ -12,14 +12,16 @@ import android.widget.TextView;
 
 
 public class AdminActivity extends ActionBarActivity {
-;
+
     private Beacon editEntry;
     private Long selected_id;
-    private EditText beaconName = (EditText) findViewById(R.id.editName);
-    private EditText latitude = (EditText) findViewById(R.id.editLatitude);
-    private EditText longitude = (EditText) findViewById(R.id.editLongitude);
-    private Spinner beaconType = (Spinner) findViewById(R.id.editType);
-    private TextView beaconId = (TextView) findViewById(R.id.editId);
+
+    EditText beaconName;
+    EditText latitude;
+    EditText longitude;
+    Spinner beaconType;
+    TextView beaconId;
+
 
     BeaconDataSource dataSource;
     @Override
@@ -32,9 +34,17 @@ public class AdminActivity extends ActionBarActivity {
             finish();
         }
 
-        ArrayAdapter dataAdapter = new ArrayAdapter(this,
+         beaconName = (EditText) findViewById(R.id.editName);
+         latitude = (EditText) findViewById(R.id.editLatitude);
+         longitude = (EditText) findViewById(R.id.editLongitude);
+         beaconType = (Spinner) findViewById(R.id.editType);
+         beaconId = (TextView) findViewById(R.id.editId);
+
+        ArrayAdapter dataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 getResources().getTextArray(R.array.types));
+
+
         //dataAdapter.setDropDownViewResource(android)
         beaconType.setAdapter(dataAdapter);
 
@@ -66,16 +76,19 @@ public class AdminActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save) {
-            editEntry.setBeacon(selected_id, Double.parseDouble(latitude.getText().toString()),
-                Double.parseDouble(longitude.getText().toString()),beaconName.getText().toString(),
-                beaconType.toString(),0);
+            editEntry.setBeacon(selected_id,
+                    Double.parseDouble(latitude.getText().toString()),
+                    Double.parseDouble(longitude.getText().toString()),
+                    beaconName.getText().toString(),
+                    beaconType.toString(),0);
 
-            return true;
         }
-        if (id == R.id.action_save) {
+        
+        if (id == R.id.action_delete) {
             dataSource.delete_beacon(editEntry);
-            return true;
         }
+
+        finish();
 
         return super.onOptionsItemSelected(item);
     }

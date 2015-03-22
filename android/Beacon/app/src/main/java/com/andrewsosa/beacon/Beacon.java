@@ -6,23 +6,23 @@ package com.andrewsosa.beacon;
 public class Beacon {
 
     private long _id;
-    private double longitude;
     private double latitude;
+    private double longitude;
     private String name;
     private String type;
     private int rating;
 
-    public Beacon(long _id, double longitude, double latitude, String name) {
+    public Beacon(long _id, double latitude, double longitude, String name) {
         this._id = _id;
-        this.longitude = longitude;
         this.latitude = latitude;
+        this.longitude = longitude;
         this.name = name;
     }
 
-    public void setBeacon(long _id, double longitude, double latitude, String name, String type, int rating) {
+    public void setBeacon(long _id, double latitude, double longitude, String name, String type, int rating) {
         this._id = _id;
-        this.longitude = longitude;
         this.latitude = latitude;
+        this.longitude = longitude;
         this.name = name;
         this.type = type;
         this.rating = rating;

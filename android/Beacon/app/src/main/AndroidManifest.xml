@@ -40,6 +40,7 @@
         <activity
             android:name=".AdminActivity"
             android:label="@string/title_activity_admin"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

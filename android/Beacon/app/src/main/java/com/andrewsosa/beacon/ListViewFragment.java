@@ -1,6 +1,7 @@
 package com.andrewsosa.beacon;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 
 /**
@@ -24,6 +26,7 @@ public class ListViewFragment extends BeaconFragment {
 
     // These are the Beacon rows that we will retrieve
     static final String[] fromColumns = new String[] {
+            BeaconHelperData.COLUMN_ID,
             BeaconHelperData.COLUMN_NAME,
             BeaconHelperData.COLUMN_TYPE,
             BeaconHelperData.COLUMN_RATING
@@ -31,6 +34,7 @@ public class ListViewFragment extends BeaconFragment {
 
     // This is the select criteria
     static final int[] toViews = new int[] {
+            R.id.hidden_id,
             R.id.tile_name,
             R.id.tile_type,
             R.id.tile_rating
@@ -73,14 +77,12 @@ public class ListViewFragment extends BeaconFragment {
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LinearLayout layout = (LinearLayout) view.findViewById(R.id.extra_layout);
 
-                /*if (layout.getVisibility() == View.GONE) {
-                    layout.setVisibility(View.VISIBLE);
-                } else {
-                    layout.setVisibility(View.GONE);
-                }*/
-
+                Intent intent = new Intent(getActivity(), AdminActivity.class);
+                String temp = ((TextView)view.findViewById(R.id.hidden_id)).getText().toString();
+                long _id = Long.parseLong(temp);
+                intent.putExtra("id", _id);
+                getActivity().startActivity(intent);
 
             }
         });
