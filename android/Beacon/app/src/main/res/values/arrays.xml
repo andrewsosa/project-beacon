@@ -5,4 +5,14 @@
         <item>Map View</item>
         <item>List View</item>
     </string-array>
+    <string-array
+        name="types">
+        <item>Bathroom</item>
+        <item>Emergency Exit</item>
+        <item>Vending Machine</item>
+        <item>ATM</item>
+        <item>Water Fountain</item>
+        <item>Scenic area</item>
+        <item>Elevator</item>
+    </string-array>
 </resources>

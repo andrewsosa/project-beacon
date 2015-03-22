@@ -19,6 +19,15 @@ public class Beacon {
         this.name = name;
     }
 
+    public void setBeacon(long _id, double longitude, double latitude, String name, String type, int rating) {
+        this._id = _id;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.name = name;
+        this.type = type;
+        this.rating = rating;
+    }
+
     public long get_id() {
         return _id;
     }
