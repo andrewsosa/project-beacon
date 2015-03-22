@@ -1,37 +1,31 @@
 package com.andrewsosa.beacon;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
-import android.support.v4.widget.DrawerLayout;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends Activity implements Toolbar.OnMenuItemClickListener,
@@ -199,9 +193,13 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
+
+                        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+                        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
                         if (nameInput != null) {
-                            dataSource.add_beacon(mLastLocation.getLatitude(),
-                                    mLastLocation.getLongitude(),
+                            dataSource.add_beacon(location.getLatitude(),
+                                    location.getLongitude(),
                                     nameInput.getText().toString());
                         }
                     }
@@ -260,12 +258,6 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
     }
 
-    protected void createLocationRequest() {
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }
 
     /*protected void startLocationUpdates() {
         LocationServices.FusedLocationApi.requestLocationUpdates(
