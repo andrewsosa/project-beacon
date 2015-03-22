@@ -53,8 +53,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="#tag  #tag  #tag"
-            android:id="@+id/tile_tags"
+            android:text="00.000"
+            android:id="@+id/tile_long"
+            android:maxLength="7"
             android:layout_alignTop="@+id/tile_type"
             android:layout_toRightOf="@+id/semicolon" />
 
@@ -74,6 +75,23 @@
             android:layout_height="wrap_content"
             android:id="@+id/hidden_id"
             android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=", "
+            android:id="@+id/tile_comma"
+            android:layout_below="@+id/tile_name"
+            android:layout_toRightOf="@+id/tile_long" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00.000"
+            android:id="@+id/tile_lat"
+            android:maxLength="7"
+            android:layout_alignTop="@+id/tile_type"
+            android:layout_toRightOf="@+id/tile_comma"/>
 
     </RelativeLayout>
 
