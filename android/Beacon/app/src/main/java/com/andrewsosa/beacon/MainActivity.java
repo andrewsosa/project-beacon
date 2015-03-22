@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.database.Cursor;
+import android.location.Location;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,10 +24,14 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.melnykov.fab.FloatingActionButton;
 
 
-public class MainActivity extends Activity implements Toolbar.OnMenuItemClickListener{
+public class MainActivity extends Activity implements Toolbar.OnMenuItemClickListener,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     // Actionbar and Navdrawer nonsense
     ActionBarDrawerToggle mDrawerToggle;
@@ -39,6 +44,9 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
     // Data source
     BeaconDataSource dataSource;
+
+    GoogleApiClient mGoogleApiClient;
+    Location mLastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +96,6 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
             }
         }
 
-
         // This is drawer touch stuff
         RelativeLayout map_group = (RelativeLayout) findViewById(R.id.map_group);
         map_group.setOnClickListener(new View.OnClickListener() {
@@ -105,10 +112,6 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
                 selectItem(1);
             }
         });
-
-
-
-
 
         /*
         fragments = new String[] {"Map", "List"};
@@ -177,7 +180,7 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
     private void createBeaconDialog() {
         MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .customView(R.layout.create_dialog_view, false)
-                .title("List Name")
+                .title("Create a new Beacon")
                 .positiveText("Create")
                 .negativeText(android.R.string.cancel)
                 .positiveColor(getResources().getColor(R.color.primaryColor))
@@ -216,5 +219,31 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
         positiveAction.setEnabled(false); // disabled by default
     }
 
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
 
+    @Override
+    public void onConnected(Bundle bundle) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        /*if (mLastLocation != null) {
+            mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
+            mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
+        }*/
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
 }

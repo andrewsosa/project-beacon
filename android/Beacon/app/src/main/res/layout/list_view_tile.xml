@@ -43,7 +43,7 @@
         android:layout_alignTop="@+id/tile_type"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,8 +51,7 @@
         android:text="#tag  #tag  #tag"
         android:id="@+id/tile_tags"
         android:layout_alignTop="@+id/tile_type"
-        android:layout_toRightOf="@+id/tile_type"
-        android:layout_marginLeft="8dp" />
+        android:layout_toRightOf="@+id/semicolon" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -4,6 +4,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_voice_search">Voice Search</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="beacon_create_dialog">"Create a new beacon at your current location."</string>
 </resources>
