@@ -62,6 +62,9 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(mDrawerToggle);
 
+        // Init location cool stuff
+        buildGoogleApiClient();
+
         // Open the datasource
         dataSource = new BeaconDataSource(this);
         dataSource.open();

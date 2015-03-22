@@ -40,7 +40,7 @@ public class BeaconDataSource {
         dbHelper.close();
     }
 
-    public Beacon add_beacon(long latitude, long longitude, String name) {
+    public Beacon add_beacon(double latitude, double longitude, String name) {
 
         // Pack tuple values
         ContentValues values = new ContentValues();
@@ -122,9 +122,9 @@ public class BeaconDataSource {
     }
 
     private Beacon cursor_to_beacon(Cursor c) {
-        Beacon temp = new Beacon(c.getLong(0), c.getLong(1), c.getLong(2), c.getString(3));
-        temp.setType(c.getLong(4));
-        temp.setRating(c.getLong(5));
+        Beacon temp = new Beacon(c.getLong(0), c.getDouble(1), c.getDouble(2), c.getString(3));
+        temp.setType(c.getString(4));
+        temp.setRating(c.getInt(5));
         return temp;
     }
 
