@@ -17,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.UiSettings;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -72,12 +73,16 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
         //set map type
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
+
+        //UiSettings.setMyLocationButtonEnabled(false);
+
+
         // Get latitude of the current location
-        double latitude = myLocation.getLatitude();
-
+        //double latitude = myLocation.getLatitude();
+        double latitude = googleMap.getMyLocation().getLatitude();
         // Get longitude of the current location
-        double longitude = myLocation.getLongitude();
-
+        //double longitude = myLocation.getLongitude();
+        double longitude = googleMap.getMyLocation().getLongitude();
         // Create a LatLng object for the current location
         LatLng latLng = new LatLng(latitude, longitude);
 
