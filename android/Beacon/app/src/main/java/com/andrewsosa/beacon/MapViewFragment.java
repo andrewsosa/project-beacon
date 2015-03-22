@@ -1,5 +1,6 @@
 package com.andrewsosa.beacon;
 
+import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.app.Fragment;
@@ -51,6 +52,7 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
     }
 
     @Override
@@ -65,36 +67,50 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
         Criteria criteria = new Criteria();
 
         // Get the name of the best provider
-        String provider = locationManager.getBestProvider(criteria, true);
+        String provider = locationManager.getBestProvider(criteria, false);
 
         // Get Current Location
-        Location myLocation = locationManager.getLastKnownLocation(provider);
+        Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         //set map type
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
 
-        //UiSettings.setMyLocationButtonEnabled(false);
+        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        googleMap.getUiSettings().setMapToolbarEnabled(false);
 
 
-        // Get latitude of the current location
+
+   // Get latitude of the current location
         double latitude = myLocation.getLatitude();
         //double latitude = googleMap.getMyLocation().getLatitude();
+
         // Get longitude of the current location
         double longitude = myLocation.getLongitude();
         //double longitude = googleMap.getMyLocation().getLongitude();
+
         // Create a LatLng object for the current location
         LatLng latLng = new LatLng(latitude, longitude);
 
         // Show the current location in Google Map
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
         // Zoom in the Google Map
+
+
+
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(20));
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!"));
+
+
+        //googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!"));
+        ArrayList<Beacon> beacons = getAllBeacons();
+
+        for(int i = 0; i < beacons.size(); ++i)
+        {
+            googleMap.addMarker(new MarkerOptions().position(new LatLng(beacons.get(i).getLatitude(), beacons.get(i).getLongitude())).title(beacons.get(i).getName()));
 
 
 
+        }
 
     }
 
