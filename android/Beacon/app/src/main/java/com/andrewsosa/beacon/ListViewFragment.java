@@ -6,6 +6,8 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
@@ -68,6 +70,20 @@ public class ListViewFragment extends BeaconFragment {
                             fromColumns, toViews, 0);
         //setListAdapter(mAdapter);
         getListView().setAdapter(mAdapter);
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LinearLayout layout = (LinearLayout) view.findViewById(R.id.extra_layout);
+
+                /*if (layout.getVisibility() == View.GONE) {
+                    layout.setVisibility(View.VISIBLE);
+                } else {
+                    layout.setVisibility(View.GONE);
+                }*/
+
+
+            }
+        });
 
         // Prepare the loader.  Either re-connect with an existing one,
         // or start a new one.
