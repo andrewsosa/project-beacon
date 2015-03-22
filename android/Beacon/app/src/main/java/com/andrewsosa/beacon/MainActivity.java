@@ -129,7 +129,6 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
     }
 
-
     /* This displays the drawer toggler. */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -145,8 +144,7 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
     /** Swaps fragments in the main content view */
     private void selectItem(int position) {
-
-
+        
         // Create a new fragment and specify the planet to show based on position
         BeaconFragment fragment = null;
         FragmentManager fragmentManager = getFragmentManager();
