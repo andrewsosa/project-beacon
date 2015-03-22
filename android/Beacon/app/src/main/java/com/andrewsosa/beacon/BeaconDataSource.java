@@ -122,7 +122,10 @@ public class BeaconDataSource {
     }
 
     private Beacon cursor_to_beacon(Cursor c) {
-        return new Beacon(c.getLong(0), c.getLong(1), c.getLong(2), c.getString(3));
+        Beacon temp = new Beacon(c.getLong(0), c.getLong(1), c.getLong(2), c.getString(3));
+        temp.setType(c.getLong(4));
+        temp.setRating(c.getLong(5));
+        return temp;
     }
 
     // general search all fields for beacon_data
@@ -139,7 +142,7 @@ public class BeaconDataSource {
                 BeaconHelperTag.COLUMN_TAG  + " LIKE" + "'%" + query + "%'", null, null, null, null, null);
     }
 
-    // Merge the two general searchs into one
+    // Merge the two general searches into one
     public Cursor search_merged(String query) {
         Cursor data_cursor = search_data(query);
         Cursor tag_cursor = search_tag(query);
