@@ -40,10 +40,6 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
     // Data source
     BeaconDataSource dataSource;
 
-    // Current position
-    int activePosition = 0;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +76,7 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
             if (savedInstanceState == null) {
                 // Create a new Fragment to be placed in the activity layout
                 mapViewFragment = new MapViewFragment();
+                mapViewFragment.setActivity(this);
 
                 // In case this activity was started with special instructions from an
                 // Intent, pass the Intent's extras to the fragment as arguments
@@ -87,7 +84,7 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getFragmentManager().beginTransaction()
-                        .add(R.id.content_frame, mapViewFragment).commit();
+                        .add(R.id.content_frame, mapViewFragment, mapViewFragment.TAG).commit();
             }
         }
 
@@ -145,26 +142,22 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
     /** Swaps fragments in the main content view */
     private void selectItem(int position) {
 
-        if(position == activePosition) {
-            drawerLayout.closeDrawers();
-            return;
-        }
-
-        activePosition = position;
 
         // Create a new fragment and specify the planet to show based on position
         BeaconFragment fragment = null;
+        FragmentManager fragmentManager = getFragmentManager();
 
-        if (position == 0) {
+        if (position == 0 && (fragmentManager.findFragmentByTag(MapViewFragment.TAG) == null
+                ||  !fragmentManager.findFragmentByTag(MapViewFragment.TAG).isVisible())) {
             fragment = new MapViewFragment();
-        } else if (position == 1) {
+        } else if (position == 1 && (fragmentManager.findFragmentByTag(ListViewFragment.TAG) == null
+                || !fragmentManager.findFragmentByTag(ListViewFragment.TAG).isVisible())) {
             fragment = new ListViewFragment();
         }
 
         // Insert the fragment by replacing any existing fragment
         if (fragment != null) {
             fragment.setActivity(this);
-            FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, fragment)
                     .commit();
@@ -176,7 +169,7 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
     }
 
     public Cursor getDataCursor() {
-        return null;
+        return dataSource.get_cursor();
     }
 
     private EditText nameInput;

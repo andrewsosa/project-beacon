@@ -58,9 +58,9 @@ public class ListViewFragment extends BeaconFragment {
         // Create an empty adapter we will use to display the loaded data.
         // We pass null for the cursor, then update it in onLoadFinished()
         mAdapter = new SimpleCursorAdapter(getActivity(),
-                android.R.layout.simple_list_item_1,
-                this.activity.getDataCursor(),
-                fromColumns, toViews, 0);
+                            R.layout.list_view_tile,
+                            ((MainActivity)getActivity()).getDataCursor(),
+                            fromColumns, toViews, 0);
         //setListAdapter(mAdapter);
         getListView().setAdapter(mAdapter);
 
@@ -73,6 +73,7 @@ public class ListViewFragment extends BeaconFragment {
 
     public void setActivity(MainActivity activity) {
         this.activity = activity;
+        //mAdapter.swapCursor(this.activity.getDataCursor());
     }
 
     private ListView getListView() {

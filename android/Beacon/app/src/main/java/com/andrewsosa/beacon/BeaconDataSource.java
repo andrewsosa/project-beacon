@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ public class BeaconDataSource {
     private BeaconHelperData dbHelper;
 
     // Column
-    private String[] allColumns = {
+    private String[] mapColumns = {
             BeaconHelperData.COLUMN_ID,
             BeaconHelperData.COLUMN_LATITUDE,
             BeaconHelperData.COLUMN_LONGITUDE,
@@ -43,21 +44,25 @@ public class BeaconDataSource {
         values.put(BeaconHelperData.COLUMN_LATITUDE, latitude);
         values.put(BeaconHelperData.COLUMN_LONGITUDE, longitude);
         values.put(BeaconHelperData.COLUMN_NAME, name);
-
+        values.put(BeaconHelperData.COLUMN_RATING, 0);
 
         // Do insert, get _id
         long insertId = database.insert(BeaconHelperData.TABLE_BEACONS, null, values);
+        Log.d("Beacon", "insertId = " + insertId);
 
         // Reread the tuple
         Cursor cursor = database.query(BeaconHelperData.TABLE_BEACONS,
-                allColumns, BeaconHelperData.COLUMN_ID + " = " + insertId, null,
+                mapColumns, BeaconHelperData.COLUMN_ID + " = " + insertId, null,
                 null, null, null);
+
+        Log.d("Beacon", "Cursor count = " + cursor.getCount());
+        Log.d("Beacon", "Cursor column count = " + cursor.getColumnCount());
 
         // Convert tuple to java object
         cursor.moveToFirst();
-        Beacon newList = cursor_to_beacon(cursor);
+        Beacon beacon = cursor_to_beacon(cursor);
         cursor.close();
-        return newList;
+        return beacon;
     }
 
     public void update_beacon(Beacon beacon) {
@@ -80,7 +85,7 @@ public class BeaconDataSource {
 
         // Read the tuple
         Cursor cursor = database.query(BeaconHelperData.TABLE_BEACONS,
-                allColumns, BeaconHelperData.COLUMN_ID + " = " + id, null,
+                mapColumns, BeaconHelperData.COLUMN_ID + " = " + id, null,
                 null, null, null);
 
         // Convert tuple to java object
@@ -93,7 +98,7 @@ public class BeaconDataSource {
     public ArrayList<Beacon> get_all_beacon() {
         ArrayList<Beacon> beacons = new ArrayList<Beacon>();
 
-        Cursor c = database.query(BeaconHelperData.TABLE_BEACONS, allColumns,
+        Cursor c = database.query(BeaconHelperData.TABLE_BEACONS, mapColumns,
                 null, null, null, null, null);
 
         c.moveToFirst();
@@ -108,7 +113,7 @@ public class BeaconDataSource {
     }
 
     public Cursor get_cursor() {
-        return database.query(BeaconHelperData.TABLE_BEACONS, allColumns,
+        return database.query(BeaconHelperData.TABLE_BEACONS, mapColumns,
                 null, null, null, null, null);
     }
 
@@ -119,7 +124,7 @@ public class BeaconDataSource {
     //TODO general search all fields for beacon
     public Beacon search_beacon(String statement ){
         Cursor cursor = database.query(BeaconHelperData.TABLE_BEACONS,
-                allColumns, BeaconHelperData.COLUMN_NAME + " = " + statement, null,
+                mapColumns, BeaconHelperData.COLUMN_NAME + " = " + statement, null,
                 null, null, null);
         Beacon result = cursor_to_beacon(cursor);
         return result;
