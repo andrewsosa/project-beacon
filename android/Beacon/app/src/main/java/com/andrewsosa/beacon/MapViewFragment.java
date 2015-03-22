@@ -78,11 +78,11 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
 
 
         // Get latitude of the current location
-        //double latitude = myLocation.getLatitude();
-        double latitude = googleMap.getMyLocation().getLatitude();
+        double latitude = myLocation.getLatitude();
+        //double latitude = googleMap.getMyLocation().getLatitude();
         // Get longitude of the current location
-        //double longitude = myLocation.getLongitude();
-        double longitude = googleMap.getMyLocation().getLongitude();
+        double longitude = myLocation.getLongitude();
+        //double longitude = googleMap.getMyLocation().getLongitude();
         // Create a LatLng object for the current location
         LatLng latLng = new LatLng(latitude, longitude);
 
