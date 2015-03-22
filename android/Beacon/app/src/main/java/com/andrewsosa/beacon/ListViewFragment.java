@@ -32,7 +32,9 @@ public class ListViewFragment extends BeaconFragment {
             BeaconHelperData.COLUMN_ID,
             BeaconHelperData.COLUMN_NAME,
             BeaconHelperData.COLUMN_TYPE,
-            BeaconHelperData.COLUMN_RATING
+            BeaconHelperData.COLUMN_RATING,
+            BeaconHelperData.COLUMN_LATITUDE,
+            BeaconHelperData.COLUMN_LONGITUDE
     };
 
     // This is the select criteria
@@ -40,7 +42,9 @@ public class ListViewFragment extends BeaconFragment {
             R.id.hidden_id,
             R.id.tile_name,
             R.id.tile_type,
-            R.id.tile_rating
+            R.id.tile_rating,
+            R.id.tile_lat,
+            R.id.tile_long
     };
 
 
