@@ -2,6 +2,7 @@ package com.andrewsosa.beacon;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -117,4 +120,17 @@ public class ListViewFragment extends BeaconFragment {
     public void onLoaderReset(Loader<Cursor> loader) {
 
     }*/
+
+    @Override
+    public void updateDataSet(Cursor c) {
+        getListView().setAdapter(new SimpleCursorAdapter(getActivity(),
+                R.layout.list_view_tile,
+                c,
+                fromColumns, toViews, 0));
+    }
+
+    @Override
+    public void updateDataSet(ArrayList<Beacon> list) {
+
+    }
 }

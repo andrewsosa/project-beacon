@@ -83,7 +83,7 @@ public class AdminActivity extends ActionBarActivity {
                     beaconType.toString(),0);
 
         }
-        
+
         if (id == R.id.action_delete) {
             dataSource.delete_beacon(editEntry);
         }

@@ -2,6 +2,7 @@ package com.andrewsosa.beacon;
 
 import java.util.ArrayList;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.UiSettings;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -36,6 +38,8 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
     public MapViewFragment() {
         // Required empty public constructor
     }
+
+    GoogleMap googleMap;
 
 
     @Override
@@ -56,8 +60,10 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(GoogleMap gMap) {
         Log.d("Beacon", "onMapReady()");
+
+        this.googleMap = gMap;
 
         googleMap.setMyLocationEnabled(true);
 
@@ -98,7 +104,7 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
 
 
 
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(20));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
 
 
         //googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!"));
@@ -106,12 +112,30 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
 
         for(int i = 0; i < beacons.size(); ++i)
         {
-            googleMap.addMarker(new MarkerOptions().position(new LatLng(beacons.get(i).getLatitude(), beacons.get(i).getLongitude())).title(beacons.get(i).getName()));
-
-
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(beacons.get(i).getLatitude(), beacons.get(i).getLongitude()))
+                    .title(beacons.get(i).getName())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)));
 
         }
 
     }
 
+    public void updateDataSet(ArrayList<Beacon> beacons) {
+        googleMap.clear();
+
+        for(int i = 0; i < beacons.size(); ++i)
+        {
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(beacons.get(i).getLatitude(), beacons.get(i).getLongitude()))
+                    .title(beacons.get(i).getName())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)));
+
+        }
+    }
+
+    @Override
+    public void updateDataSet(Cursor c) {
+
+    }
 }

@@ -39,7 +39,8 @@
                     android:layout_height="fill_parent"
                     android:background="@android:color/transparent"
                     android:hint="Search Beacons..."
-                    android:id="@+id/searchBar" />
+                    android:id="@+id/searchBar"
+                    android:imeOptions="actionSearch"/>
 
             </android.support.v7.widget.Toolbar>
 

@@ -12,11 +12,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -45,6 +49,9 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
+
+    // Active Fragment
+    BeaconFragment activeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +83,31 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
             }
         });
 
+        // Search bar listener
+        EditText editText = (EditText) findViewById(R.id.searchBar);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if (v.getText().toString().length() > 0) {
+
+                        if (activeFragment instanceof MapViewFragment) {
+                            activeFragment.updateDataSet(dataSource.get_all_beacon());
+                        } else if (activeFragment instanceof ListViewFragment) {
+                            activeFragment.updateDataSet(dataSource.get_cursor());
+                        }
+                        
+                        InputMethodManager imm = (InputMethodManager) getSystemService(
+                                Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
         // Add initial fragment
         if (findViewById(R.id.content_frame) != null) {
 
@@ -84,8 +116,8 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
             // we could end up with overlapping fragments.
             if (savedInstanceState == null) {
                 // Create a new Fragment to be placed in the activity layout
-                mapViewFragment = new MapViewFragment();
-                mapViewFragment.setActivity(this);
+                activeFragment = new MapViewFragment();
+                activeFragment.setActivity(this);
 
                 // In case this activity was started with special instructions from an
                 // Intent, pass the Intent's extras to the fragment as arguments
@@ -93,7 +125,7 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getFragmentManager().beginTransaction()
-                        .add(R.id.content_frame, mapViewFragment, mapViewFragment.TAG).commit();
+                        .add(R.id.content_frame, activeFragment).commit();
             }
         }
 
@@ -146,22 +178,22 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
     private void selectItem(int position) {
         
         // Create a new fragment and specify the planet to show based on position
-        BeaconFragment fragment = null;
+        //BeaconFragment fragment = null;
         FragmentManager fragmentManager = getFragmentManager();
 
         if (position == 0 && (fragmentManager.findFragmentByTag(MapViewFragment.TAG) == null
                 ||  !fragmentManager.findFragmentByTag(MapViewFragment.TAG).isVisible())) {
-            fragment = new MapViewFragment();
+            activeFragment = new MapViewFragment();
         } else if (position == 1 && (fragmentManager.findFragmentByTag(ListViewFragment.TAG) == null
                 || !fragmentManager.findFragmentByTag(ListViewFragment.TAG).isVisible())) {
-            fragment = new ListViewFragment();
+            activeFragment = new ListViewFragment();
         }
 
         // Insert the fragment by replacing any existing fragment
-        if (fragment != null) {
-            fragment.setActivity(this);
+        if (activeFragment != null) {
+            activeFragment.setActivity(this);
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fragment)
+                    .replace(R.id.content_frame, activeFragment)
                     .commit();
         }
         // Highlight the selected item, update the title, and close the drawer
