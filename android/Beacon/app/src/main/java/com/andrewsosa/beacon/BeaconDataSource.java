@@ -23,7 +23,8 @@ public class BeaconDataSource {
             BeaconHelperData.COLUMN_LATITUDE,
             BeaconHelperData.COLUMN_LONGITUDE,
             BeaconHelperData.COLUMN_NAME,
-            BeaconHelperData.COLUMN_TYPE
+            BeaconHelperData.COLUMN_TYPE,
+            BeaconHelperData.COLUMN_RATING
     };
 
     public BeaconDataSource(Context context) {
