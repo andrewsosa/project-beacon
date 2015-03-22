@@ -26,8 +26,12 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.melnykov.fab.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends Activity implements Toolbar.OnMenuItemClickListener,
@@ -178,6 +182,10 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
         return dataSource.get_cursor();
     }
 
+    public ArrayList<Beacon> getBeaconList() {
+        return dataSource.get_all_beacon();
+    }
+
     private EditText nameInput;
     private View positiveAction;
     private void createBeaconDialog() {
@@ -251,4 +259,16 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
+
+    protected void createLocationRequest() {
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    /*protected void startLocationUpdates() {
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
+    }*/
 }
