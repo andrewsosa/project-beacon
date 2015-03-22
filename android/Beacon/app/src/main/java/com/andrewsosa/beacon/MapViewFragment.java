@@ -102,7 +102,7 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
 
 
         //googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!"));
-        ArrayList<Beacon> beacons = getAllBeacons();
+        ArrayList<Beacon> beacons = ((MainActivity)getActivity()).getBeaconList();
 
         for(int i = 0; i < beacons.size(); ++i)
         {
