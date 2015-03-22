@@ -124,8 +124,7 @@ public class ListViewFragment extends BeaconFragment {
     @Override
     public void updateDataSet(Cursor c) {
         getListView().setAdapter(new SimpleCursorAdapter(getActivity(),
-                R.layout.list_view_tile,
-                c,
+                R.layout.list_view_tile, c,
                 fromColumns, toViews, 0));
     }
 

@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -82,6 +83,7 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
                 createBeaconDialog();
             }
         });
+        fab.requestFocus();
 
         // Search bar listener
         EditText editText = (EditText) findViewById(R.id.searchBar);
@@ -93,11 +95,17 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
                     if (v.getText().toString().length() > 0) {
 
                         if (activeFragment instanceof MapViewFragment) {
-                            activeFragment.updateDataSet(dataSource.get_all_beacon());
+                            activeFragment.updateDataSet(CursorToList(dataSource.search_data(v.getText().toString())));
+                            //Toast.makeText(MainActivity.this, "Searched map.", Toast.LENGTH_SHORT).show();
+
                         } else if (activeFragment instanceof ListViewFragment) {
-                            activeFragment.updateDataSet(dataSource.get_cursor());
+                            activeFragment.updateDataSet(dataSource.search_data(v.getText().toString()));
+                            //Toast.makeText(MainActivity.this, "Searched List.", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(MainActivity.this, "No match.", Toast.LENGTH_SHORT).show();
                         }
-                        
+
                         InputMethodManager imm = (InputMethodManager) getSystemService(
                                 Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -293,4 +301,18 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
     }*/
+
+    private ArrayList<Beacon> CursorToList(Cursor c) {
+        ArrayList<Beacon> beacons = new ArrayList<Beacon>();
+
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            Beacon b = BeaconDataSource.cursor_to_beacon(c);
+            beacons.add(b);
+            c.moveToNext();
+        }
+
+        c.close();
+        return beacons;
+    }
 }

@@ -40,7 +40,10 @@
                     android:background="@android:color/transparent"
                     android:hint="Search Beacons..."
                     android:id="@+id/searchBar"
-                    android:imeOptions="actionSearch"/>
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:inputType="text" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -64,7 +67,8 @@
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="false">
+            android:fitsSystemWindows="false"
+            android:focusable="true">
 
 
             <!--<include

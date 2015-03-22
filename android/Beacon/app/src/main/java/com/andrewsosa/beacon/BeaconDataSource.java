@@ -121,7 +121,7 @@ public class BeaconDataSource {
                 null, null, null, null, null);
     }
 
-    private Beacon cursor_to_beacon(Cursor c) {
+    public static Beacon cursor_to_beacon(Cursor c) {
         Beacon temp = new Beacon(c.getLong(0), c.getDouble(1), c.getDouble(2), c.getString(3));
         temp.setType(c.getString(4));
         temp.setRating(c.getInt(5));
@@ -130,15 +130,15 @@ public class BeaconDataSource {
 
     // general search all fields for beacon_data
     public Cursor search_data(String query) {
-        return database.query(true, BeaconHelperData.TABLE_BEACONS, new String[] {BeaconHelperData.COLUMN_NAME,
-                BeaconHelperData.COLUMN_TYPE}, BeaconHelperData.COLUMN_NAME + " LIKE" + "'%" +
+        return database.query(true, BeaconHelperData.TABLE_BEACONS, allColumns,
+                BeaconHelperData.COLUMN_NAME + " LIKE" + "'%" +
                 query + "%' OR " + BeaconHelperData.COLUMN_TYPE  + " LIKE" + "'%" +
                 query + "%'", null, null, null, null, null);
     }
 
     // general search all fields for beacon_tag
     public Cursor search_tag(String query) {
-        return database.query(true, BeaconHelperTag.TABLE_BEACON_TAG, new String[] { BeaconHelperTag.COLUMN_TAG},
+        return database.query(true, BeaconHelperTag.TABLE_BEACON_TAG, allColumns,
                 BeaconHelperTag.COLUMN_TAG  + " LIKE" + "'%" + query + "%'", null, null, null, null, null);
     }
 

@@ -100,11 +100,9 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
 
         // Show the current location in Google Map
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
         // Zoom in the Google Map
-
-
-
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
 
 
         //googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!"));
