@@ -25,10 +25,43 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tile details"
-        android:id="@+id/tile_detail"
+        android:text="Type"
+        android:id="@+id/tile_type"
         android:layout_below="@+id/tile_name"
         android:layout_alignLeft="@+id/tile_name"
         android:layout_alignStart="@+id/tile_name"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textColor="@color/primaryTextDark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\u2014"
+        android:id="@+id/semicolon"
+        android:layout_toRightOf="@+id/tile_type"
+        android:layout_toEndOf="@+id/tile_type"
+        android:layout_alignTop="@+id/tile_type"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#tag  #tag  #tag"
+        android:id="@+id/tile_tags"
+        android:layout_alignTop="@+id/tile_type"
+        android:layout_toRightOf="@+id/tile_type"
+        android:layout_marginLeft="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+1"
+        android:id="@+id/tile_rating"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:textSize="14dp" />
 </RelativeLayout>

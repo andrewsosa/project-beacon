@@ -48,9 +48,7 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d("Beacon", "onMapReady()");
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(0, 0))
-                .title("Marker"));
+ 
         //googleMap.setMyLocationEnabled(true);
 
     }
