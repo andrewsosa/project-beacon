@@ -123,13 +123,17 @@ public class BeaconDataSource {
         return new Beacon(c.getLong(0), c.getLong(1), c.getLong(2), c.getString(3));
     }
 
-    //TODO general search all fields for beacon
-    public Beacon search_beacon(String statement ){
-        Cursor cursor = database.query(BeaconHelperData.TABLE_BEACONS,
-                allColumns, BeaconHelperData.COLUMN_NAME + " = " + statement, null,
-                null, null, null);
-        Beacon result = cursor_to_beacon(cursor);
-        return result;
+    // general search all fields for beacon
+    public Cursor search_data(String query) {
+        return database.query(true, BeaconHelperData.TABLE_BEACONS, new String[] { BeaconHelperData.COLUMN_ID,
+                BeaconHelperData.COLUMN_NAME, BeaconHelperData.COLUMN_LATITUDE,
+                BeaconHelperData.COLUMN_LONGITUDE, BeaconHelperData.COLUMN_TYPE,
+                BeaconHelperData.COLUMN_RATING }, BeaconHelperData.COLUMN_NAME + " LIKE" + "'%" +
+                query + "%' OR " + BeaconHelperData.COLUMN_LATITUDE +
+                " LIKE" + "'%" + query + "%' OR " + BeaconHelperData.COLUMN_LONGITUDE + " LIKE" + "'%" +
+                query + "%' OR " + BeaconHelperData.COLUMN_TYPE  + " LIKE" + "'%" +
+                query + "%' OR " + BeaconHelperData.COLUMN_RATING  + " LIKE" + "'%" +
+                query + "%'", null, null, null, null, null);
     }
 }
 
