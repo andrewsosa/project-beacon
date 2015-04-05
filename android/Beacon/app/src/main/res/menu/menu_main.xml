@@ -2,5 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_voice_search" android:title="@string/action_voice_search"
-        android:orderInCategory="1" app:showAsAction="always" android:icon="@drawable/ic_mic_none_grey600_24dp" />
+        android:orderInCategory="1" app:showAsAction="ifRoom" android:icon="@drawable/ic_mic_none_grey600_24dp" />
+    <item android:id="@+id/action_logout" android:title="Sign out"
+        android:orderInCategory="100" app:showAsAction="never"/>
 </menu>

@@ -3,6 +3,7 @@ package com.andrewsosa.beacon;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
@@ -34,6 +35,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.melnykov.fab.FloatingActionButton;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
@@ -62,7 +64,8 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
     // Icons for drawer
     static int[] icons = new int[]{
         R.drawable.ic_map_grey600_24dp,
-        R.drawable.ic_list_grey600_24dp
+        R.drawable.ic_reorder_grey600_24dp,
+        R.drawable.ic_location_on_grey600_24dp
     };
 
 
@@ -75,6 +78,7 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
         // Toolbar craziness
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setOnMenuItemClickListener(this);
 
         // Drawer craziness
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -107,7 +111,7 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
         selectItem(1);
-        
+
         // Init location cool stuff
         buildGoogleApiClient();
 
@@ -156,27 +160,6 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
             }
         });*/
 
-        // Add initial fragment
-        /*if (findViewById(R.id.content_frame) != null) {
-
-            // However, if we're being restored from a previous state,
-            // then we don't need to do anything and should return or else
-            // we could end up with overlapping fragments.
-            if (savedInstanceState == null) {
-                // Create a new Fragment to be placed in the activity layout
-                activeFragment = new MapViewFragment();
-                activeFragment.setActivity(this);
-
-                // In case this activity was started with special instructions from an
-                // Intent, pass the Intent's extras to the fragment as arguments
-                //firstFragment.setArguments(getIntent().getExtras());
-
-                // Add the fragment to the 'fragment_container' FrameLayout
-                getFragmentManager().beginTransaction()
-                        .add(R.id.content_frame, activeFragment).commit();
-            }
-        } */
-
     }
 
     /* This displays the drawer toggler. */
@@ -189,6 +172,19 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
     /* Handles voice search toggle */
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
+
+        switch(menuItem.getItemId()) {
+            case R.id.action_voice_search:
+                Intent i = new Intent(this, ParseTest.class);
+                startActivity(i);
+                break;
+            case R.id.action_logout:
+                ParseUser.logOut();
+                Intent intent = new Intent(this, DispatchActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+        }
+
         return super.onOptionsItemSelected(menuItem);
     }
 
@@ -229,14 +225,12 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
     private void changeStatusBarColor(int position){
         switch(position) {
-            case 1:
-                drawerLayout.setStatusBarBackgroundColor(
+            case 1: drawerLayout.setStatusBarBackgroundColor(
                         getResources().getColor(R.color.primaryColor));
                 break;
-            case 2:
-                drawerLayout.setStatusBarBackgroundColor(
-                        getResources().getColor(R.color.primaryColorDark));
-                break;
+
+            default: drawerLayout.setStatusBarBackgroundColor(
+                    getResources().getColor(R.color.primaryColorDark));
 
         }
     }
@@ -259,9 +253,9 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
                         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
                         if (nameInput != null) {
-                            dataSource.add_beacon(location.getLatitude(),
+                            /*dataSource.add_beacon(location.getLatitude(),
                                     location.getLongitude(),
-                                    nameInput.getText().toString());
+                                    nameInput.getText().toString()); */
                         }
                     }
 

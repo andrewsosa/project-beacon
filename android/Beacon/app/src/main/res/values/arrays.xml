@@ -2,9 +2,8 @@
 <resources>
     <string-array
         name="fragments">
-        <item>Map Search</item>
-        <item>List Search</item>
         <item>Explore Beacons</item>
+        <item>List Search</item>
         <item>Nearby Beacons</item>
 
     </string-array>

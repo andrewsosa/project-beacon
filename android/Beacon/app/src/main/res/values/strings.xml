@@ -10,4 +10,8 @@
     <string name="action_save">Save</string>
     <string name="action_delete">Delete</string>
     <string name="beacon_create_dialog">"Create a new beacon at your current location."</string>
+    <string name="title_activity_parse_test">ParseTest</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_dispatch">DispatchActivity</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
 </resources>
