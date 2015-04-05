@@ -2,8 +2,11 @@
 <resources>
     <string-array
         name="fragments">
-        <item>Map View</item>
-        <item>List View</item>
+        <item>Map Search</item>
+        <item>List Search</item>
+        <item>Explore Beacons</item>
+        <item>Nearby Beacons</item>
+
     </string-array>
     <string-array
         name="types">
@@ -15,4 +18,10 @@
         <item>Scenic area</item>
         <item>Elevator</item>
     </string-array>
+    <integer-array name="drawer_icons">
+        <item>@drawable/ic_map_grey600_24dp</item>
+        <item>@drawable/ic_list_grey600_24dp</item>
+    </integer-array>
 </resources>
+
+

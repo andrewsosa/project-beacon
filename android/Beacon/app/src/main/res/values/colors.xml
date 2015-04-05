@@ -4,10 +4,12 @@
 
     <!-- App Colors -->
     <color name="primaryColor">@color/blue_500</color>
-    <color name="primaryColorDark">@color/blue_500</color>
+    <color name="primaryColorDark">@color/blue_700</color>
     <color name="accentColor">@color/teal_A200</color>
     <color name="windowBackground">@color/grey_white_1000</color>
     <color name="dividerColor">#B6B6B6</color>
+
+    <color name="statusBar">@color/blue_A200</color>
 
     <!-- Text Colors -->
     <color name="primaryTextLight">@color/abc_primary_text_material_dark</color>

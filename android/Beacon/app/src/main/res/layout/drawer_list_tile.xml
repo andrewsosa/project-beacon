@@ -1,13 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:clickable="true"
-    android:background="?android:attr/selectableItemBackground">
+    android:background="@drawable/drawer_list_background"
+    android:focusable="false"
+    android:focusableInTouchMode="false">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
+        android:id="@+id/tile_icon"
         android:layout_marginLeft="16dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="false"
@@ -25,5 +26,5 @@
         android:layout_marginTop="0dp"
         android:layout_centerVertical="true"
         android:fontFamily="sans-serif-medium"
-        android:textColor="@color/primaryTextDark" />
+        android:textColor="@drawable/drawer_list_text" />
 </RelativeLayout>

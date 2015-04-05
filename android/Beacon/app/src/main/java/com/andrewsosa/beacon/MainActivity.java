@@ -12,14 +12,19 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,21 +43,29 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
 
     // Actionbar and Navdrawer nonsense
     ActionBarDrawerToggle mDrawerToggle;
-    String[] fragments;
-    ListView mDrawerList;
+    String[] fragmentTitles;
+    ListView drawerList;
     DrawerLayout drawerLayout;
 
-    // Fragments
+    // Fragment reference
+    //BeaconFragment activeFragment;
     MapViewFragment mapViewFragment;
+    ListViewFragment listViewFragment;
 
     // Data source
     BeaconDataSource dataSource;
 
+    // Google API Variables
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
 
-    // Active Fragment
-    BeaconFragment activeFragment;
+    // Icons for drawer
+    static int[] icons = new int[]{
+        R.drawable.ic_map_grey600_24dp,
+        R.drawable.ic_list_grey600_24dp
+    };
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +80,34 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(mDrawerToggle);
+        //drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.primaryColorDark));
+        drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.primaryColor));
 
+        // Initialize the fragments
+        mapViewFragment = new MapViewFragment();
+        listViewFragment = new ListViewFragment();
+
+        // Set up navigation list
+        fragmentTitles = getResources().getStringArray(R.array.fragments);
+        drawerList = (ListView) findViewById(R.id.drawerList);
+
+        // List adapter
+        drawerList.setAdapter(new DrawerItemAdapter<>(this,
+                R.layout.drawer_list_tile,
+                R.id.tile_text,
+                getResources().getStringArray(R.array.fragments),
+                R.id.tile_icon,
+                icons
+        ));
+
+        // Header view
+        LayoutInflater inflater = getLayoutInflater();
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.drawer_header, drawerList, false);
+        drawerList.addHeaderView(header, null, false);
+
+        drawerList.setOnItemClickListener(new DrawerItemClickListener());
+        selectItem(1);
+        
         // Init location cool stuff
         buildGoogleApiClient();
 
@@ -86,8 +126,8 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
         fab.requestFocus();
 
         // Search bar listener
-        EditText editText = (EditText) findViewById(R.id.searchBar);
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        //EditText editText = (EditText) findViewById(R.id.searchBar);
+        /*editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
@@ -114,10 +154,10 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
                 }
                 return false;
             }
-        });
+        });*/
 
         // Add initial fragment
-        if (findViewById(R.id.content_frame) != null) {
+        /*if (findViewById(R.id.content_frame) != null) {
 
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
@@ -135,37 +175,7 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
                 getFragmentManager().beginTransaction()
                         .add(R.id.content_frame, activeFragment).commit();
             }
-        }
-
-        // This is drawer touch stuff
-        RelativeLayout map_group = (RelativeLayout) findViewById(R.id.map_group);
-        map_group.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectItem(0);
-            }
-        });
-
-        RelativeLayout list_group = (RelativeLayout) findViewById(R.id.list_group);
-        list_group.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectItem(1);
-            }
-        });
-
-        /*
-        fragments = new String[] {"Map", "List"};
-        mDrawerList = (ListView) findViewById(R.id.nav_listView);
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_tile, R.id.tile_text, fragments));
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Helo", Toast.LENGTH_SHORT).show();
-                selectItem(position);
-            }
-        }); */
+        } */
 
     }
 
@@ -182,40 +192,53 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
         return super.onOptionsItemSelected(menuItem);
     }
 
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            Log.d("Beacon", "DrawerItemClickListener.onItemCLick()");
+            selectItem(position);
+        }
+    }
+
     /** Swaps fragments in the main content view */
     private void selectItem(int position) {
-        
-        // Create a new fragment and specify the planet to show based on position
-        //BeaconFragment fragment = null;
-        FragmentManager fragmentManager = getFragmentManager();
 
-        if (position == 0 && (fragmentManager.findFragmentByTag(MapViewFragment.TAG) == null
-                ||  !fragmentManager.findFragmentByTag(MapViewFragment.TAG).isVisible())) {
-            activeFragment = new MapViewFragment();
-        } else if (position == 1 && (fragmentManager.findFragmentByTag(ListViewFragment.TAG) == null
-                || !fragmentManager.findFragmentByTag(ListViewFragment.TAG).isVisible())) {
-            activeFragment = new ListViewFragment();
+        //--position;
+
+        BeaconFragment fragment = null;
+        switch(position) {
+            case 1: fragment = mapViewFragment;
+                break;
+            case 2: fragment = listViewFragment;
+                break;
         }
 
         // Insert the fragment by replacing any existing fragment
-        if (activeFragment != null) {
-            activeFragment.setActivity(this);
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, activeFragment)
+                    .replace(R.id.content_frame, fragment)
                     .commit();
         }
+
         // Highlight the selected item, update the title, and close the drawer
-        //mDrawerList.setItemChecked(position, true);
-        //drawerLayout.closeDrawer(drawerLayout);
-        drawerLayout.closeDrawers();
+        drawerList.setItemChecked(position, true);
+        changeStatusBarColor(position);
+        drawerLayout.closeDrawer(findViewById(R.id.scrimInsetsFrameLayout));
     }
 
-    public Cursor getDataCursor() {
-        return dataSource.get_cursor();
-    }
+    private void changeStatusBarColor(int position){
+        switch(position) {
+            case 1:
+                drawerLayout.setStatusBarBackgroundColor(
+                        getResources().getColor(R.color.primaryColor));
+                break;
+            case 2:
+                drawerLayout.setStatusBarBackgroundColor(
+                        getResources().getColor(R.color.primaryColorDark));
+                break;
 
-    public ArrayList<Beacon> getBeaconList() {
-        return dataSource.get_all_beacon();
+        }
     }
 
     private EditText nameInput;
@@ -297,10 +320,13 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
     }
 
 
-    /*protected void startLocationUpdates() {
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, this);
-    }*/
+    public Cursor getDataCursor() {
+        return dataSource.get_cursor();
+    }
+
+    public ArrayList<Beacon> getBeaconList() {
+        return dataSource.get_all_beacon();
+    }
 
     private ArrayList<Beacon> CursorToList(Cursor c) {
         ArrayList<Beacon> beacons = new ArrayList<Beacon>();
@@ -315,4 +341,5 @@ public class MainActivity extends Activity implements Toolbar.OnMenuItemClickLis
         c.close();
         return beacons;
     }
+
 }
