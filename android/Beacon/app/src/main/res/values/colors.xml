@@ -11,6 +11,8 @@
 
     <color name="statusBar">@color/blue_A200</color>
 
+    <color name="blackground">#243237</color>
+
     <!-- Text Colors -->
     <color name="primaryTextLight">@color/abc_primary_text_material_dark</color>
     <color name="primaryTextDark">@color/abc_primary_text_material_light</color>

@@ -23,7 +23,6 @@ public class LoginActivity extends ActionBarActivity {
     // User fields
     EditText usernameEditText;
     EditText passwordEditText;
-    EditText passwordAgainEditText;
 
 
     @Override
@@ -33,15 +32,7 @@ public class LoginActivity extends ActionBarActivity {
 
         usernameEditText = (EditText) findViewById(R.id.username_edit_text);
         passwordEditText = (EditText) findViewById(R.id.password_edit_text);
-        passwordAgainEditText = (EditText) findViewById(R.id.password_again_edit_text);
 
-
-        final Button create = (Button) findViewById(R.id.create);
-        create.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                signup();
-            }
-        });
 
         // Set up the submit button click handler
         Button signIn = (Button) findViewById(R.id.sign_in);
@@ -54,30 +45,16 @@ public class LoginActivity extends ActionBarActivity {
         final Button newUsers = (Button) findViewById(R.id.new_user);
         newUsers.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                newUsers.setVisibility(View.GONE);
-                passwordAgainEditText.setVisibility(View.VISIBLE);
-                create.setVisibility(View.VISIBLE);
+                LoginActivity.startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
             }
         });
 
-        /*passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == R.id.edittext_action_login ||
-                        actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
-                    login();
-                    return true;
-                }
-                return false;
-            }
-        });*/
 
     }
 
     private void signup() {
         String username = usernameEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
-        String passwordAgain = passwordAgainEditText.getText().toString().trim();
 
         boolean validationError = false;
         StringBuilder validationErrorMessage = new StringBuilder(getString(R.string.error_intro));
@@ -92,13 +69,7 @@ public class LoginActivity extends ActionBarActivity {
             validationError = true;
             validationErrorMessage.append(getString(R.string.error_blank_password));
         }
-        if (!password.equals(passwordAgain)) {
-            if (validationError) {
-                validationErrorMessage.append(getString(R.string.error_join));
-            }
-            validationError = true;
-            validationErrorMessage.append(getString(R.string.error_mismatched_passwords));
-        }
+
         validationErrorMessage.append(getString(R.string.error_end));
         if (validationError) {
             Toast.makeText(LoginActivity.this, validationErrorMessage.toString(), Toast.LENGTH_LONG)

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListViewFragment extends BeaconFragment {
+public class ListViewFragment extends Fragment {
 
     public static String TAG = "LIST_VIEW_FRAGMENT";
 
@@ -28,14 +28,14 @@ public class ListViewFragment extends BeaconFragment {
     SimpleCursorAdapter mAdapter;
 
     // These are the Beacon rows that we will retrieve
-    static final String[] fromColumns = new String[] {
+    /*static final String[] fromColumns = new String[] {
             BeaconHelperData.COLUMN_ID,
             BeaconHelperData.COLUMN_NAME,
             BeaconHelperData.COLUMN_TYPE,
             BeaconHelperData.COLUMN_RATING,
             BeaconHelperData.COLUMN_LATITUDE,
             BeaconHelperData.COLUMN_LONGITUDE
-    };
+    };*/
 
     // This is the select criteria
     static final int[] toViews = new int[] {
@@ -75,7 +75,7 @@ public class ListViewFragment extends BeaconFragment {
 
         // Create an empty adapter we will use to display the loaded data.
         // We pass null for the cursor, then update it in onLoadFinished()
-        mAdapter = new SimpleCursorAdapter(getActivity(),
+        /*mAdapter = new SimpleCursorAdapter(getActivity(),
                             R.layout.list_view_tile,
                             ((MainActivity)getActivity()).getDataCursor(),
                             fromColumns, toViews, 0);
@@ -92,19 +92,15 @@ public class ListViewFragment extends BeaconFragment {
                 getActivity().startActivity(intent);
 
             }
-        });
+        });/*
 
         // Prepare the loader.  Either re-connect with an existing one,
         // or start a new one.
-        //getLoaderManager().initLoader(0, null, this);
+        //getLoaderManager().initLoader(0, null, this); */
 
 
     }
 
-    public void setActivity(MainActivity activity) {
-        this.activity = activity;
-        //mAdapter.swapCursor(this.activity.getDataCursor());
-    }
 
     private ListView getListView() {
         return (ListView) getView().findViewById(R.id.list);
@@ -125,15 +121,5 @@ public class ListViewFragment extends BeaconFragment {
 
     }*/
 
-    @Override
-    public void updateDataSet(Cursor c) {
-        getListView().setAdapter(new SimpleCursorAdapter(getActivity(),
-                R.layout.list_view_tile, c,
-                fromColumns, toViews, 0));
-    }
 
-    @Override
-    public void updateDataSet(ArrayList<Beacon> list) {
-
-    }
 }

@@ -20,9 +20,6 @@ public abstract class BeaconFragment extends Fragment {
         this.activity = activity;
     }
 
-    public ArrayList<Beacon> getAllBeacons() {
-        return activity.getBeaconList();
-    }
 
 
 }

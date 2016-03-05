@@ -2,6 +2,7 @@ package com.andrewsosa.beacon;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -29,7 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapViewFragment extends BeaconFragment implements OnMapReadyCallback {
+public class MapViewFragment extends BeaconFragment {
 
     private MapFragment mapFragment;
     public static String TAG = "MAP_VIEW_FRAGMENT";
@@ -54,11 +55,12 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
 
         mapFragment = (MapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mapFragment.getMapAsync(((MainActivity)getActivity()));
 
 
     }
 
+    /*
     @Override
     public void onMapReady(GoogleMap gMap) {
         Log.d("Beacon", "onMapReady()");
@@ -67,16 +69,18 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
 
         googleMap.setMyLocationEnabled(true);
 
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        //LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         // Create a criteria object to retrieve provider
-        Criteria criteria = new Criteria();
+        //Criteria criteria = new Criteria();
 
         // Get the name of the best provider
-        String provider = locationManager.getBestProvider(criteria, false);
+        //String provider = locationManager.getBestProvider(criteria, false);
 
         // Get Current Location
-        Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        //Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        Location myLocation = ((MainActivity) getActivity()).getUsableLocation();
 
         //set map type
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -87,7 +91,7 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
 
 
 
-   // Get latitude of the current location
+        // Get latitude of the current location
 
         double latitude;
         double longitude;
@@ -122,7 +126,37 @@ public class MapViewFragment extends BeaconFragment implements OnMapReadyCallbac
 
         }
 
-    }
+    } */
+
+    /* public void updateLocation(Location location) {
+
+        if (location == null || googleMap == null) return;
+
+        double latitude;
+        double longitude;
+
+        try {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        } catch (Exception e) {
+            latitude = 0;
+            longitude = 0;
+        }
+
+        // Create a LatLng object for the current location
+        LatLng latLng = new LatLng(latitude, longitude);
+
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!"));
+
+
+        // Show the current location in Google Map
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        // Zoom in the Google Map
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+
+    } */
+
 
     public void updateDataSet(ArrayList<Beacon> beacons) {
         googleMap.clear();
